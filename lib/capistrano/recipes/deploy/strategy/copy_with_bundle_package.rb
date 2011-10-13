@@ -1,5 +1,4 @@
 require 'capistrano/recipes/deploy/strategy/copy'
-require 'fileutils'
 
 module Capistrano
   module Deploy
@@ -10,7 +9,6 @@ module Capistrano
           cmd = "#{fetch(:bundle_cmd, 'bundle')} package"
 
           Dir.chdir(directory) do
-            FileUtils.rm_rf 'vendor/cache'
             defined?(Bundler) ? with_original_env { system(cmd) } : system(cmd)
 
             # Check the return code of bundle package command and rollback if not 0
