@@ -6,6 +6,13 @@ module Capistrano
       class CopyWithBundlePackage < Copy
 
         def build(directory)
+          super
+          bundle_package(directory)
+        end
+
+        private
+
+        def bundle_package(directory)
           cmd = "#{fetch(:bundle_cmd, 'bundle')} package"
 
           Dir.chdir(directory) do
@@ -17,8 +24,6 @@ module Capistrano
             end
           end
         end
-
-        private
 
         def with_original_env
           original_env = ENV.to_hash
